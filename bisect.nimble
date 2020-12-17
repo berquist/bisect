@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.1.1"
 author        = "Eric Berquist"
 description   = "Bisection algorithms ported from Python"
 license       = "MIT"
