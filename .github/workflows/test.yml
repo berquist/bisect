@@ -1,0 +1,14 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        nim: [ '1.0.0', 'stable', 'devel' ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Nim
+        uses: jiro4989/setup-nim-action@v1
+        with:
+          nim-version: ${{ matrix.nim }}
+      - run: nimble build --accept
+      - run: nimble test --accept
