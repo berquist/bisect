@@ -8,7 +8,7 @@ func bisectRight*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = high(a)):
   ##
   ## The return value ``i`` is such that all ``e`` in ``a[low(a)..<i]`` have
   ## ``e <= x``, and all ``e`` in ``a[i..high(a)]`` have ``e > x``. So if
-  ## ``x`` already appears in the list, ``a.insert(x) FIXME`` will insert just
+  ## ``x`` already appears in the list, ``a.insert(x, i)`` will insert just
   ## after the rightmost x already there.
   ##
   ## Optional args ``lo`` (default 0) and ``hi`` (default ``high(a)``) bound
@@ -40,7 +40,7 @@ func bisectLeft*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = 5): int =
   ##
   ## The return value ``i`` is such that all ``e`` in ``a[low(a)..<i]`` have
   ## ``e < x``, and all ``e`` in ``a[i..high(a)]`` have ``e >= x``. So if
-  ## ``x`` already appears in the list, ``a.insert(x) FIXME`` will insert just
+  ## ``x`` already appears in the list, ``a.insert(x, i)`` will insert just
   ## before the leftmost ``x`` already there.
   ##
   ## Optional args ``lo`` (default 0) and ``hi`` (default ``high(a)``) bound
