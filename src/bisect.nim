@@ -13,14 +13,6 @@ func bisectRight*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = high(a)):
   ##
   ## Optional args ``lo`` (default 0) and ``hi`` (default ``high(a)``) bound
   ## the slice of ``a`` to be searched.
-  if lo < low(a):
-    raise newException(ValueError, "lo must not be lower than low(a)")
-  if lo > high(a):
-    raise newException(ValueError, "lo must not be greater than high(a)")
-  if hi < low(a):
-    raise newException(ValueError, "hi must not be lower than low(a)")
-  if hi > high(a):
-    raise newException(ValueError, "hi must not be greater than high(a)")
   var
     ilo = lo
     ihi = hi + 1
@@ -34,7 +26,7 @@ func bisectRight*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = high(a)):
   ilo
 
 # TODO `hi` should also be Natural, https://github.com/nim-lang/Nim/issues/14587
-func bisectLeft*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = 5): int =
+func bisectLeft*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = high(a)): int =
   ## Return the index where to insert item ``x`` in array ``a``, assuming
   ## ``a`` is sorted.
   ##
@@ -45,14 +37,6 @@ func bisectLeft*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = 5): int =
   ##
   ## Optional args ``lo`` (default 0) and ``hi`` (default ``high(a)``) bound
   ## the slice of ``a`` to be searched.
-  if lo < low(a):
-    raise newException(ValueError, "lo must not be lower than low(a)")
-  if lo > high(a):
-    raise newException(ValueError, "lo must not be greater than high(a)")
-  if hi < low(a):
-    raise newException(ValueError, "hi must not be lower than low(a)")
-  if hi > high(a):
-    raise newException(ValueError, "hi must not be greater than high(a)")
   var
     ilo = lo
     ihi = hi + 1
