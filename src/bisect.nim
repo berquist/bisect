@@ -1,7 +1,8 @@
 ## Bisection algorithms, translated from the Python standard library
 ## ``bisect`` module.
 
-func bisectRight*[T](a: openArray[T], x: T, lo: int = 0, hi: int = high(a)): int =
+# TODO `hi` should also be Natural, https://github.com/nim-lang/Nim/issues/14587
+func bisectRight*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = high(a)): int =
   ## Return the index where to insert item ``x`` in array ``a``, assuming
   ## ``a`` is sorted.
   ##
@@ -13,14 +14,17 @@ func bisectRight*[T](a: openArray[T], x: T, lo: int = 0, hi: int = high(a)): int
   ## Optional args ``lo`` (default 0) and ``hi`` (default ``high(a)``) bound
   ## the slice of ``a`` to be searched.
   if lo < low(a):
-    raise newException(ValueError, "lo must be non-negative")
+    raise newException(ValueError, "lo must not be lower than low(a)")
+  if lo > high(a):
+    raise newException(ValueError, "lo must not be greater than high(a)")
+  if hi < low(a):
+    raise newException(ValueError, "hi must not be lower than low(a)")
   if hi > high(a):
     raise newException(ValueError, "hi must not be greater than high(a)")
-  var ilo = lo
-  var mid: int
-  # This is because the high part of a slice in Python is exclusive, but in
-  # Nim it is inclusive.
-  var ihi = hi + 1
+  var
+    ilo = lo
+    ihi = hi + 1
+    mid: int
   while ilo < ihi:
     mid = (ilo + ihi) div 2
     if x < a[mid]:
@@ -29,7 +33,8 @@ func bisectRight*[T](a: openArray[T], x: T, lo: int = 0, hi: int = high(a)): int
       ilo = mid + 1
   ilo
 
-func bisectLeft*[T](a: openArray[T], x: T, lo: int = 0, hi: int = high(a)): int =
+# TODO `hi` should also be Natural, https://github.com/nim-lang/Nim/issues/14587
+func bisectLeft*[T](a: openArray[T], x: T, lo: Natural = 0, hi: int = 5): int =
   ## Return the index where to insert item ``x`` in array ``a``, assuming
   ## ``a`` is sorted.
   ##
@@ -41,14 +46,17 @@ func bisectLeft*[T](a: openArray[T], x: T, lo: int = 0, hi: int = high(a)): int 
   ## Optional args ``lo`` (default 0) and ``hi`` (default ``high(a)``) bound
   ## the slice of ``a`` to be searched.
   if lo < low(a):
-    raise newException(ValueError, "lo must be non-negative")
+    raise newException(ValueError, "lo must not be lower than low(a)")
+  if lo > high(a):
+    raise newException(ValueError, "lo must not be greater than high(a)")
+  if hi < low(a):
+    raise newException(ValueError, "hi must not be lower than low(a)")
   if hi > high(a):
     raise newException(ValueError, "hi must not be greater than high(a)")
-  var ilo = lo
-  var mid: int
-  # This is because the high part of a slice in Python is exclusive, but in
-  # Nim it is inclusive.
-  var ihi = hi + 1
+  var
+    ilo = lo
+    ihi = hi + 1
+    mid: int
   while ilo < ihi:
     mid = (ilo + ihi) div 2
     if a[mid] < x:
@@ -57,7 +65,7 @@ func bisectLeft*[T](a: openArray[T], x: T, lo: int = 0, hi: int = high(a)): int 
       ihi = mid
   ilo
 
-func insortRight*[T](a: var seq[T], x: T, lo: int = 0, hi: int = high(a)) =
+func insortRight*[T](a: var seq[T], x: T, lo: Natural = 0, hi: int = high(a)) =
   ## Insert item ``x`` into sequence ``a``, and keep it sorted assuming ``a``
   ## is sorted.
   ##
@@ -68,7 +76,7 @@ func insortRight*[T](a: var seq[T], x: T, lo: int = 0, hi: int = high(a)) =
   ## slice of ``a`` to be searched.
   a.insert(x, a.bisectRight(x, lo, hi))
 
-func insortLeft*[T](a: var seq[T], x: T, lo: int = 0, hi: int = high(a)) =
+func insortLeft*[T](a: var seq[T], x: T, lo: Natural = 0, hi: int = high(a)) =
   ## Insert item ``x`` into sequence ``a``, and keep it sorted assuming ``a``
   ## is sorted.
   ##
