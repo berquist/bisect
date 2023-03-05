@@ -1,0 +1,7 @@
+*.html
+
+## Nim
+
+nimcache/
+nimblecache/
+htmldocs/
